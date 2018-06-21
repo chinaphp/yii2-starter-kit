@@ -20,7 +20,7 @@ class RbacAuthAssignment extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'rbac_auth_assignment';
+        return '{{%rbac_auth_assignment}}';
     }
 
     /**
@@ -32,7 +32,7 @@ class RbacAuthAssignment extends \yii\db\ActiveRecord
             [['item_name', 'user_id'], 'required'],
             [['created_at'], 'integer'],
             [['item_name', 'user_id'], 'string', 'max' => 64],
-            [['item_name'], 'exist', 'skipOnError' => true, 'targetClass' => RbacAuthItem::className(), 'targetAttribute' => ['item_name' => 'name']],
+            [['item_name'], 'exist', 'skipOnError' => true, 'targetClass' => RbacAuthItem::class, 'targetAttribute' => ['item_name' => 'name']],
         ];
     }
 
@@ -53,15 +53,6 @@ class RbacAuthAssignment extends \yii\db\ActiveRecord
      */
     public function getItemName()
     {
-        return $this->hasOne(RbacAuthItem::className(), ['name' => 'item_name']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return RbacAuthAssignmentQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new RbacAuthAssignmentQuery(get_called_class());
+        return $this->hasOne(RbacAuthItem::class, ['name' => 'item_name']);
     }
 }

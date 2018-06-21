@@ -38,17 +38,37 @@ composer install
 You can install this application template with `composer` using the following command:
 
 ```
-composer create-project --prefer-dist --stability=dev trntv/yii2-starter-kit
+composer create-project trntv/yii2-starter-kit myproject.com
 ```
+
+## Docker installation
+1. Install [docker](https://docs.docker.com/engine/installation/), [docker-compose](https://docs.docker.com/compose/install/) and [composer](https://getcomposer.org/) to your system
+2. Run ``composer run-script docker:start``
+3. That's all - your application is accessible on [http://yii2-starter-kit.localhost](http://yii2-starter-kit.localhost)
+
+ * - docker host IP address may vary on Windows and MacOS systems
+ 
+*PS* Also you can use bash inside application container. To do so run `docker-compose exec app bash`
+
+### Docker FAQ
+1. How do i run yii console commands from outside a container?
+
+``docker-compose exec app console/yii help``
+
+``docker-compose exec app console/yii migrate``
+
+``docker-compose exec app console/yii rbac-migrate``
+
+2. How to connect to the application database with my workbench, navicat etc?
+MySQL is available on `yii2-starter-kit.localhost`, port `3306`. User - `root`, password - `root`
 
 ## Manual installation
 
 ### REQUIREMENTS
-The minimum requirement by this application template that your Web server supports PHP 5.6.0.
+The minimum requirement by this application template that your Web server supports PHP 7.
 Required PHP extensions:
 - intl
 - gd
-- mcrypt
 - com_dotnet (for Windows)
 
 ### Setup application
@@ -68,9 +88,9 @@ Required PHP extensions:
 
 	- Set application canonical urls
 	```
-	FRONTEND_HOST_INFO    = http://yii2-starter-kit.dev
-	BACKEND_HOST_INFO     = http://backend.yii2-starter-kit.dev
-	STORAGE_HOST_INFP     = http://storage.yii2-starter-kit.dev
+	FRONTEND_HOST_INFO    = http://yii2-starter-kit.localhost
+	BACKEND_HOST_INFO     = http://backend.yii2-starter-kit.localhost
+	STORAGE_HOST_INFP     = http://storage.yii2-starter-kit.localhost
 	```
 
 3. Run in command line
@@ -83,31 +103,6 @@ npm run build
 ### Configure your web server
 - Copy `docker/vhost.conf` to your nginx config directory
 - Change it to fit your environment
-
-## Docker installation
-1. Install [docker](https://docs.docker.com/engine/installation/) and [docker-compose](https://docs.docker.com/compose/install/) to your system
-2. Add ``127.0.0.1 yii2-starter-kit.dev backend.yii2-starter-kit.dev storage.yii2-starter-kit.dev``* to your `/etc/hosts` file
-3. Copy `.env.dist` to `.env` in the project root
-4. Run `docker-compose up -d`
-5. Install composer dependencies `docker-compose exec app composer install`
-6. Setup application with `docker-compose exec app php console/yii app/setup --interactive=0`
-7. That's all - your application is accessible on http://yii2-starter-kit.dev
-
- * - docker host IP address may vary on Windows and MacOS systems
- 
-*PS* Also you can use bash inside application container. To do so run `docker-compose exec app bash`
-
-### Docker FAQ
-1. How do i run yii console commands from outside a container?
-
-`docker-compose exec app console/yii help`
-
-`docker-compose exec app console/yii migrate`
-
-`docker-compose exec app console/yii rbac-migrate`
-
-2. How to connect to the application database with my workbench, navicat etc?
-MySQL is available on `yii2-starter-kit.dev`, port `3306`. User - `root`, password - `root`
 
 ## Vagrant installation
 If you want, you can use bundled Vagrant instead of installing app to your local machine.
@@ -122,7 +117,7 @@ If you want, you can use bundled Vagrant instead of installing app to your local
 vagrant plugin install vagrant-hostmanager
 vagrant up
 ```
-That`s all. After provision application will be accessible on http://yii2-starter-kit.dev
+That`s all. After provision application will be accessible on http://yii2-starter-kit.localhost
 
 ## Demo data
 ### Demo Users

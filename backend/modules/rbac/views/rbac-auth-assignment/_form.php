@@ -10,7 +10,7 @@ use yii\bootstrap\ActiveForm;
 
 <div class="rbac-auth-assignment-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin() ?>
 
     <?php echo $form->errorSummary($model); ?>
 
@@ -24,6 +24,6 @@ use yii\bootstrap\ActiveForm;
         <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end() ?>
 
 </div>

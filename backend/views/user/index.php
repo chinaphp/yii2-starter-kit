@@ -2,8 +2,10 @@
 
 use common\grid\EnumColumn;
 use common\models\User;
+use trntv\yii\datetime\DateTimeWidget;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\UserSearch */
@@ -33,13 +35,37 @@ $this->params['breadcrumbs'][] = $this->title;
             'username',
             'email:email',
             [
-                'class' => EnumColumn::className(),
+                'class' => EnumColumn::class,
                 'attribute' => 'status',
                 'enum' => User::statuses(),
                 'filter' => User::statuses()
             ],
-            'created_at:datetime',
-            'logged_at:datetime',
+            [
+                'attribute' => 'created_at',
+                'format' => 'datetime',
+                'filter' => DateTimeWidget::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'created_at',
+                    'phpDatetimeFormat' => 'dd.MM.yyyy',
+                    'momentDatetimeFormat' => 'DD.MM.YYYY',
+                    'clientEvents' => [
+                        'dp.change' => new JsExpression('(e) => $(e.target).find("input").trigger("change.yiiGridView")')
+                    ],
+                ])
+            ],
+            [
+                'attribute' => 'logged_at',
+                'format' => 'datetime',
+                'filter' => DateTimeWidget::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'logged_at',
+                    'phpDatetimeFormat' => 'dd.MM.yyyy',
+                    'momentDatetimeFormat' => 'DD.MM.YYYY',
+                    'clientEvents' => [
+                        'dp.change' => new JsExpression('(e) => $(e.target).find("input").trigger("change.yiiGridView")')
+                    ],
+                ])
+            ],
             // 'updated_at',
 
             [

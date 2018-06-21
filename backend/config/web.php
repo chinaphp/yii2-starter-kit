@@ -3,45 +3,41 @@ $config = [
     'homeUrl' => Yii::getAlias('@backendUrl'),
     'controllerNamespace' => 'backend\controllers',
     'defaultRoute' => 'timeline-event/index',
-    'controllerMap' => [
-        'file-manager-elfinder' => [
-            'class' => mihaildev\elfinder\Controller::class,
-            'access' => ['manager'],
-            'disabledCommands' => ['netmount'],
-            'roots' => [
-                [
-                    'baseUrl' => '@storageUrl',
-                    'basePath' => '@storage',
-                    'path' => '/',
-                    'access' => ['read' => 'manager', 'write' => 'manager']
-                ]
-            ]
-        ]
-    ],
     'components' => [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
         'request' => [
             'cookieValidationKey' => env('BACKEND_COOKIE_VALIDATION_KEY'),
-            'baseUrl' => env('BACKEND_BASE_URL')
+            'baseUrl' => env('BACKEND_BASE_URL'),
         ],
         'user' => [
             'class' => yii\web\User::class,
             'identityClass' => common\models\User::class,
             'loginUrl' => ['sign-in/login'],
             'enableAutoLogin' => true,
-            'as afterLogin' => common\behaviors\LoginTimestampBehavior::class
+            'as afterLogin' => common\behaviors\LoginTimestampBehavior::class,
         ],
     ],
     'modules' => [
-        'i18n' => [
-            'class' => backend\modules\i18n\Module::class,
-            'defaultRoute' => 'i18n-message/index'
+        'content' => [
+            'class' => backend\modules\content\Module::class,
+        ],
+        'widget' => [
+            'class' => backend\modules\widget\Module::class,
+        ],
+        'file' => [
+            'class' => backend\modules\file\Module::class,
+        ],
+        'system' => [
+            'class' => backend\modules\system\Module::class,
+        ],
+        'translation' => [
+            'class' => backend\modules\translation\Module::class,
         ],
         'rbac' => [
             'class' => backend\modules\rbac\Module::class,
-            'defaultRoute' => 'rbac-auth-item/index'
+            'defaultRoute' => 'rbac-auth-item/index',
         ],
     ],
     'as globalAccess' => [
@@ -51,19 +47,19 @@ $config = [
                 'controllers' => ['sign-in'],
                 'allow' => true,
                 'roles' => ['?'],
-                'actions' => ['login']
+                'actions' => ['login'],
             ],
             [
                 'controllers' => ['sign-in'],
                 'allow' => true,
                 'roles' => ['@'],
-                'actions' => ['logout']
+                'actions' => ['logout'],
             ],
             [
                 'controllers' => ['site'],
                 'allow' => true,
                 'roles' => ['?', '@'],
-                'actions' => ['error']
+                'actions' => ['error'],
             ],
             [
                 'controllers' => ['debug/default'],
@@ -82,9 +78,9 @@ $config = [
             [
                 'allow' => true,
                 'roles' => ['manager', 'administrator'],
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {
@@ -94,12 +90,12 @@ if (YII_ENV_DEV) {
             'crud' => [
                 'class' => yii\gii\generators\crud\Generator::class,
                 'templates' => [
-                    'yii2-starter-kit' => Yii::getAlias('@backend/views/_gii/templates')
+                    'yii2-starter-kit' => Yii::getAlias('@backend/views/_gii/templates'),
                 ],
                 'template' => 'yii2-starter-kit',
-                'messageCategory' => 'backend'
-            ]
-        ]
+                'messageCategory' => 'backend',
+            ],
+        ],
     ];
 }
 
